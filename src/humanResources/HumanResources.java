@@ -20,7 +20,7 @@ public class HumanResources {
 		return input;
 	}
 	
-	private static int check(int n) { 
+	private static int check(int n) { //validate choosing function
 		while(n < 0 || n > 7) {
 			System.err.print("Please enter an integer in range 0 - 7: ");
 			n = intCheck();
@@ -61,7 +61,7 @@ public class HumanResources {
 		return n;
 	}
 	
-	private static String checkString() {
+	private static String checkString() { //validate string not to be empty
 		String s = in.nextLine().toUpperCase();
 		while(s.trim().equals("")) {
 			System.err.print("Must not be empty, please enter information: ");
@@ -79,11 +79,11 @@ public class HumanResources {
 		return true;
 	}
 	
-	private static int compare(ICalculator a1, ICalculator a2) {
+	private static int compare(ICalculator a1, ICalculator a2) { //sorting by ascending order
 		return (int)(a1.calculateSalary() - a2.calculateSalary());
 	}
 	
-	private static int compareTo(ICalculator a1, ICalculator a2) {
+	private static int compareTo(ICalculator a1, ICalculator a2) { //sorting by alphabet
 		return a1.getId().compareTo(a2.getId());
 	}
 	
@@ -123,22 +123,22 @@ public class HumanResources {
 			case 2: //Display departments
 				allDepartments();
 				break;
-			case 3:
+			case 3: //Display staffs by departments
 				staffsByDepartments();
 				break;
-			case 4: //add new staff
+			case 4: //Add new staff
 				addStaff();
 				break;
-			case 5:
+			case 5: //Search staff
 				searchStaff();
 				break;
-			case 6:
+			case 6: //Display wage statements
 				wagesStatements();
 				break;
-			case 7: 
+			case 7: //Display wage statements by ascending order
 				sortWagesStatements();
 				break;
-			case 0:
+			case 0: //Exit
 				exit();
 				choose = false;
 				break;
@@ -146,6 +146,7 @@ public class HumanResources {
 		}
 		
 	}
+	
 	
 	public static void start() {
 		employee.add(new Employee("E1", "NGUYỄN DUY ANH", 35, 2.2, "22/12/2009", "D1", 10, 10));
@@ -167,11 +168,8 @@ public class HumanResources {
 		
 	}
 	
-	public static void allStaffs() {
-		//create and add employee to the list of employee
-		
-		
-		//print out list of staffs
+	
+	public static void allStaffs() { //print out list of staffs
 		System.out.println("-----------------------------------------------------------------Employee's list-----------------------------------------------------------------");
 		System.out.println();
 		System.out.println(String.format("%-10s%-20s%-20s%-20s%-20s%-20s%-20s%-20s", "ID", "NAME", "AGE", "SALARY COEFFICIENT", "START DATE", "DEPARTMENT", "DAYS OFF", "OVERTIME HOURS"));
@@ -179,6 +177,7 @@ public class HumanResources {
 			System.out.println(anEm.toString());
 		}
 		System.out.println();
+		
 		System.out.println("-----------------------------------------------------------------Managers's list-----------------------------------------------------------------");
 		System.out.println();
 		System.out.println(String.format("%-10s%-20s%-20s%-20s%-20s%-20s%-20s%-20s", "ID", "NAME", "AGE", "SALARY COEFFICIENT", "START DATE", "DEPARTMENT", "DAYS OFF", "POSITION"));
@@ -188,7 +187,8 @@ public class HumanResources {
 		System.out.println();
 	}
 	
-	public static void allDepartments() {
+	
+	public static void allDepartments() { //display information of departments
 		//create and add departments to list of departments
 		department.add(new Department("D1", "BUSINESS", 0));
 		department.add(new Department("D2", "PROJECT", 0));
@@ -260,9 +260,12 @@ public class HumanResources {
 		System.out.println();
 	}
 	
-	public static void addStaff() {
+	
+	public static void addStaff() { //Add new staff 
 		System.out.println("Enter information of a new staff");
 		in.nextLine();
+		
+		//ID
 		System.out.print("ID: ");
 		String id = "";
 		while(in.hasNext()) {
@@ -275,19 +278,25 @@ public class HumanResources {
 		}
 		
 		in.nextLine();
+		
+		//Name
 		System.out.print("Name: ");
 		String name = checkString().toUpperCase();
 		
+		//Age
 		System.out.print("Age: ");
 		int age = intCheck();
 		
+		//Salary coefficient
 		System.out.print("Salary coefficient: ");
 		double salaryCoefficient = doubleCheck();
 		
+		//Start date
 		System.out.print("Start date: ");
 		in.nextLine();
 		String startDate = checkString();
 		
+		//Department
 		System.out.print("Department ID (1 = D1,2 = D2, 3 = D3): ");
 		int chooseDepartment = intCheck();
 		chooseDepartment = checkDepartmentID(chooseDepartment);
@@ -304,14 +313,16 @@ public class HumanResources {
 			break;
 		}
 		
+		//Days off
 		System.out.print("Number of days off: ");
 		int daysOff = intCheck();
 		
+		//choose to add employee or manager
 		System.out.print("Add an employee or a manager?(0 = employee, 1 = manager) ");
 		int staffType = intCheck();
 		staffType = checkStaffType(staffType);
 		
-		if(staffType == 0) {
+		if(staffType == 0) { //employee
 			System.out.print("Number of overtime hours: ");
 			int overtime = intCheck();
 			
@@ -319,7 +330,7 @@ public class HumanResources {
 			Employee newEm = new Employee(id, name, age, salaryCoefficient, startDate, departmentID, daysOff, overtime);
 			employee.add(newEm);
 			staff.add(newEm);
-		} else {
+		} else { //manager
 			System.out.print("Position: ");
 			in.nextLine();
 			String position = checkString();
@@ -368,46 +379,55 @@ public class HumanResources {
 		}
 	}
  	
-	public static void wagesStatements() {
+	public static void wagesStatements() { //Display wage statements
 		System.out.println("--------------------Employee--------------------");
 		System.out.println(String.format("%-10s%-20s%-15s", "ID", "NAME", "SALARY"));
+		
 		employee.sort(HumanResources::compareTo);
+		
 		for(Employee em : employee) {
 			System.out.println(String.format("%-10s%-20s%-15s", em.getId(), em.getName(), (int)em.calculateSalary()));
 		}
 		
 		System.out.println("--------------------Managers--------------------");
 		System.out.println(String.format("%-10s%-20s%-15s", "ID", "NAME", "SALARY"));
+		
 		manager.sort(HumanResources::compareTo);
+		
 		for(Manager man : manager) {
 			System.out.println(String.format("%-10s%-20s%-15s", man.getId(), man.getName(), (int)man.calculateSalary()));
 		}
 		System.out.println();
 	}
 	
-	public static void sortWagesStatements() {
+	public static void sortWagesStatements() { //Display wage statements in ascending order
 		System.out.println("--------------------Employee--------------------");
 		System.out.println(String.format("%-10s%-20s%-15s", "ID", "NAME", "SALARY"));
+		
 		employee.sort(HumanResources::compare);
+		
 		for(Employee em : employee) {
 			System.out.println(String.format("%-10s%-20s%-15s", em.getId(), em.getName(), (int)em.calculateSalary()));
 		}
 		
 		System.out.println("--------------------Managers--------------------");
 		System.out.println(String.format("%-10s%-20s%-15s", "ID", "NAME", "SALARY"));
+		
 		manager.sort(HumanResources::compare);
+		
 		for(Manager man : manager) {
 			System.out.println(String.format("%-10s%-20s%-15s", man.getId(), man.getName(), (int)man.calculateSalary()));
 		}
 		System.out.println();
 	}
 	
-	public static void exit() {
-		System.err.print("oooooooo" + " " + "oo    oo" + " " + "oooooooo" + "   " + "oooooooo" + " " + "oo    o " + "oooooo" + "\n");
-		System.err.print("   oo" + "    " + "oo    oo" + " " + "oo" + "         " + "oo" + "       " + "ooo   o " + "oo    oo" + "\n");
-		System.err.print("   oo" + "    " + "oooooooo" + " " + "oooooooo" + "   " + "oooooooo" + " " + "oo o  o " + "oo    oo" + "\n");
-		System.err.print("   oo" + "    " + "oo    oo" + " " + "oo" + "         " + "oo" + "       " + "oo  o o " + "oo    oo" + "\n");
-		System.err.print("   oo" + "    " + "oo    oo" + " " + "oooooooo" + "   " + "oooooooo" + " " + "oo    o " + "oooooo");
+	public static void exit() { //Exit program
+		
+		System.err.print("========" + " " + "||    ||" + " " + "========" + "   " + "========" + " " + "||\\    | " + "======" + "\n");
+		System.err.print("   ||" + "    " + "||    ||" + " " + "||" + "         " + "||" + "       " + "||\\\\   | " + "||    ||" + "\n");
+		System.err.print("   ||" + "    " + "|======|" + " " + "||===== " + "   " + "||===== " + " " + "|| \\\\  | " + "||    ||" + "\n");
+		System.err.print("   ||" + "    " + "||    ||" + " " + "||" + "         " + "||" + "       " + "||  \\\\ | " + "||    ||" + "\n");
+		System.err.print("   ||" + "    " + "||    ||" + " " + "========" + "   " + "========" + " " + "||   \\\\| " + "======");
 	}
 
 }
