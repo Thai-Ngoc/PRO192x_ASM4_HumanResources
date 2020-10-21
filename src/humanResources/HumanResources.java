@@ -276,7 +276,7 @@ public class HumanResources {
 		
 		in.nextLine();
 		System.out.print("Name: ");
-		String name = in.nextLine().toUpperCase();
+		String name = checkString().toUpperCase();
 		
 		System.out.print("Age: ");
 		int age = intCheck();
@@ -336,7 +336,7 @@ public class HumanResources {
 	public static void searchStaff() {
 		in.nextLine();
 		System.out.print("Want to find? ");
-		String searchKey = in.nextLine().toUpperCase();
+		String searchKey = checkString().toUpperCase();
 		
 		//search staff
 		List<Staff> searchStaff = new ArrayList<>();
